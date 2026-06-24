@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Azure Hotel</title>
+    <link rel="stylesheet" href="hotel.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">AZURE HOTEL</div>
+            <ul class="nav-links">
+                <li><a href="/" class="active">Dashboard</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/staff">Staff</a></li>
+                <li><a href="/bookings">Bookings</a></li>
+            </ul>
+        </nav>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
+                    </svg>
+                    <h3>Total Rooms</h3>
+                </div>
+                <div class="stat-value">{{ stats.total_rooms }}</div>
+                <div class="stat-label">Available Inventory</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <h3>Occupied</h3>
+                </div>
+                <div class="stat-value">{{ stats.occupied }}</div>
+                <div class="stat-label">Current Guests</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <h3>Available</h3>
+                </div>
+                <div class="stat-value">{{ stats.available }}</div>
+                <div class="stat-label">Ready to Book</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <h3>Revenue</h3>
+                </div>
+                <div class="stat-value">R{{ stats.revenue }}</div>
+                <div class="stat-label">Total Bookings</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                <h2>Quick Actions</h2>
+            </div>
+            <a href="/bookings" class="btn btn-primary">New Booking</a>
+            <a href="/services" class="btn btn-outline" style="margin-left: 1rem;">View Services</a>
+        </div>
+    </div>
+</body>
+</html>

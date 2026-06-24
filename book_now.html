@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings | Azure Hotel</title>
+    <link rel="stylesheet" href="hotel.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">AZURE HOTEL</div>
+            <ul class="nav-links">
+                <li><a href="/">Dashboard</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/staff">Staff</a></li>
+                <li><a href="/bookings" class="active">Bookings</a></li>
+            </ul>
+        </nav>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    <h2>New Booking</h2>
+                </div>
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label>Guest Name</label>
+                        <input type="text" id="guestName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Room Type</label>
+                        <select id="roomType" required>
+                            <option value="Deluxe">Deluxe - R1,850</option>
+                            <option value="Executive Suite">Executive Suite - R3,200</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Check-in Date</label>
+                        <input type="date" id="checkin" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nights</label>
+                        <input type="number" id="nights" min="1" value="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Booking</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                    <h2>All Bookings</h2>
+                </div>
+                <table class="table" id="bookingsTable">
+                    <thead>
+                        <tr>
+                            <th>Guest</th>
+                            <th>Room</th>
+                            <th>Check-in</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script>
+    async function loadBookings() {
+        const res = await fetch('/api/bookings');
+        const bookings = await res.json();
+        const tbody = document.querySelector('#bookingsTable tbody');
+        tbody.innerHTML = bookings.map(b => `
+            <tr>
+                <td>${b.guest}</td>
+                <td>${b.room}</td>
+                <td>${b.checkin}</td>
+                <td>${b.status}</td>
+                <td>R${b.total}</td>
+            </tr>
+        `).join('');
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const room = document.getElementById('roomType').value;
+        const nights = parseInt(document.getElementById('nights').value);
+        const price = room === 'Deluxe' ? 1850 : 3200;
+        
+        const booking = {
+            guest: document.getElementById('guestName').value,
+            room: room,
+            checkin: document.getElementById('checkin').value,
+            nights: nights,
+            total: price * nights
+        };
+
+        await fetch('/api/bookings', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(booking)
+        });
+
+        e.target.reset();
+        loadBookings();
+    });
+
+    loadBookings();
+</script>
+</body>
+</html>
